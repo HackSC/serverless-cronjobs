@@ -5,5 +5,6 @@ type Data = {
 }
 
 export default (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  res.status(200).json({ name: 'John Doe' })
+  if(req) res.status(200).json({ name: 'John Doe' })
+  else res.status(500).json({name: "Please do not hit this route..."})
 }
