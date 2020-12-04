@@ -23,10 +23,10 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
           // * ------------------- *
           // * Logs for Time Sync
-          console.log("Event:", e.name)
-          console.log("t", curr_time)
-          console.log("t + 10", curr_date_min_10)
-          console.log("event start time", event_start_time)
+          // console.log("Event:", e.name)
+          // console.log("t", curr_time)
+          // console.log("t + 10", curr_date_min_10)
+          // console.log("event start time", event_start_time)
           // * ------------------- *
 
           if (
