@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const app = await CreateSlackApp();
   if(!!app && !!req) {
     // * Fetch event schedule from odyssey API
-    await fetch("https://staging.hacksc.com/api/public/events/list")
+    await fetch("https://dashboard.hacksc.com/api/public/events/list")
       .then((result) => result.json())
       .then((events) => {
         events.events.forEach((e: event) => {
