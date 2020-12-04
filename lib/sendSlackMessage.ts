@@ -1,5 +1,12 @@
 import event from '../types/event'
 
+const createFormattedDateTimeString = (iso: string) => {
+  let date = new Date(iso);
+  console.log(date)
+  console.log(iso)
+  return `${date.getHours() < 10 ? '0' + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()} ${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`
+}
+
 const SendSlackMessage = async (e: event, app: any, starting_phrase: string) => {
   try {
     let slack_channel = process.env.SLACK_ANNOUNCEMENTS_CHANNEL
@@ -29,11 +36,11 @@ const SendSlackMessage = async (e: event, app: any, starting_phrase: string) => 
             },
             {
               type: "mrkdwn",
-              text: `Starting At: ${e.startsAt}\n`,
+              text: `Starting At: ${createFormattedDateTimeString(e.startsAt)}\n`,
             },
             {
               type: "mrkdwn",
-              text: `Ends At: ${e.endsAt}\n`,
+              text: `Ends At: ${createFormattedDateTimeString(e.endsAt)}\n`,
             },
           ],
         },
