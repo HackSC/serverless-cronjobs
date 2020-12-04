@@ -15,34 +15,24 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .then((result) => result.json())
       .then((events) => {
         events.events.forEach((e: event) => {
-          let curr_date_min_10 = Math.round(
-            new Date().setMinutes(new Date().getMinutes() + 10) / (1000 * 60) -
-              new Date().getTimezoneOffset()
-          );
-          let curr_time = Math.round(
-            new Date().getTime() / (1000 * 60) - new Date().getTimezoneOffset()
-          );
+          let curr_date_min_10 = Math.round(new Date().setMinutes(new Date().getMinutes() + 10) / (1000 * 60));
+          curr_date_min_10 = curr_date_min_10 - new Date().getTimezoneOffset();
+
+          let curr_time = Math.round(new Date().getTime() / (1000 * 60));
+          curr_time = curr_time - (new Date()).getTimezoneOffset()
 
           let event_start_time = Date.parse(e.startsAt) / (1000 * 60);
-
-          console.log("t plus 10", curr_date_min_10)
-          console.log("t", curr_time)
-
-          console.log("event start time", event_start_time)
-
 
           if (
             event_start_time - curr_date_min_10 > -1 &&
             event_start_time - curr_date_min_10 < 1
           ) {
-            console.log("Sending slack message \"starting in 10 min\"")
             SendSlackMessage(e, app, "starting in 10 minutes");
           }
           if (
             event_start_time - curr_time > -1 &&
             event_start_time - curr_time < 1
           ) {
-            console.log("Sending slack message \"starting now\"")
             SendSlackMessage(e, app, "starts now");
           }
         });
