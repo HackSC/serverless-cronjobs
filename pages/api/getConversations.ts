@@ -1,4 +1,4 @@
-import {  NextApiResponse } from "next";
+import {  NextApiRequest, NextApiResponse } from "next";
 
 const { App, LogLevel } = require("@slack/bolt");
 const dotenv = require('dotenv')
@@ -54,10 +54,12 @@ function saveConversations(conversationsArray: Array<any>) {
 
 }
 
-export default async ( res: NextApiResponse) => {
-  await app.start(3030);
-  await fetchConversations()
-  await app.stop();
-  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
-  res.json({ ...conversationsStore })
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  if(!!req) {
+    await app.start(3030);
+    await fetchConversations()
+    await app.stop();
+    res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
+    return res.json({ ...conversationsStore })
+  }
 }
