@@ -18,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           let curr_time = Math.round(new Date().getTime() / (1000 * 60));
           curr_time = curr_time - 480; // * timeoffset not accurate since we dont know where vercel deploys its apps in the edge network (new Date()).getTimezoneOffset()
           
-          let curr_date_min_10 = curr_time + 10 - 480;
+          let curr_date_min_10 = curr_time + 10;
 
           let event_start_time = Date.parse(e.startsAt) / (1000 * 60);
 
