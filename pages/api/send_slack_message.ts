@@ -22,11 +22,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
           let event_start_time = Date.parse(e.startsAt) / (1000 * 60);
 
-          console.log("t plus 10", curr_date_min_10)
-          console.log("t", curr_time)
-
-          console.log("event start time", event_start_time)
-
           if (
             event_start_time - curr_date_min_10 > -1 &&
             event_start_time - curr_date_min_10 < 1
