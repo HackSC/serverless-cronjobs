@@ -7,7 +7,7 @@ type Data = {
 }
 
 type QueryType = NextApiRequest & {
-    query: NextApiRequest & {
+    body: {
         name: string,
         description: string,
         startsAt: string,
@@ -18,8 +18,9 @@ type QueryType = NextApiRequest & {
 export default async (req: QueryType, res: NextApiResponse<Data>) => {
   const app = await CreateSlackApp();
   if(!!app && !!req) {
-    // * Send Slack Message using req.query
-    SendSlackMessage(req.query, app, "C01G1US5RS6", "starts now");
+    // * Send Slack Message using req.body
+    console.log(req.body)
+    SendSlackMessage(req.body, app, "C01G1US5RS6", "");
     // * Done iterating over events, so we were successful.
     return res.status(200).json({ result: 'Successfully sent slack messages!' })
   } else {
