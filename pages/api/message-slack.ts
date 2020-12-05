@@ -18,11 +18,15 @@ type QueryType = NextApiRequest & {
 export default async (req: QueryType, res: NextApiResponse<Data>) => {
   const app = await CreateSlackApp();
   if(!!app && !!req) {
-    // * Send Slack Message using req.body
-    console.log(req.body)
-    SendSlackMessage(req.body, app, "C01G1US5RS6", "");
-    // * Done iterating over events, so we were successful.
-    return res.status(200).json({ result: 'Successfully sent slack messages!' })
+    try {
+      // * Send Slack Message using req.body
+      SendSlackMessage(JSON.parse(req.body), app, "C01G1US5RS6", "");
+      // * Done iterating over events, so we were successful.
+      return res.status(200).json({ result: 'Successfully sent slack messages!' })
+    }
+    catch (e) {
+      return res.status(500).json({ result: "Failed to parse body as json!" })
+    }
   } else {
     // * App and req have to be valid
     console.error("Failed to initialize slack app :alarm:")
