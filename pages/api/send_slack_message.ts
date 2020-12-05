@@ -29,17 +29,21 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           // console.log("event start time", event_start_time)
           // * ------------------- *
 
+          let slack_channel = process.env.SLACK_ANNOUNCEMENTS_CHANNEL
+          ? process.env.SLACK_ANNOUNCEMENTS_CHANNEL
+          : "C01FUMML1JA"; // * #2021-app-announcements
+
           if (
             event_start_time - curr_date_min_10 > -1 &&
             event_start_time - curr_date_min_10 < 1
           ) {
-            SendSlackMessage(e, app, "starting in 10 minutes");
+            SendSlackMessage(e, app, slack_channel, "starting in 10 minutes");
           }
           if (
             event_start_time - curr_time > -1 &&
             event_start_time - curr_time < 1
           ) {
-            SendSlackMessage(e, app, "starts now");
+            SendSlackMessage(e, app, slack_channel, "starts now");
           }
         });
 

@@ -2,21 +2,15 @@ import event from '../types/event'
 
 const createFormattedDateTimeString = (iso: string) => {
   let date = new Date(iso);
-  console.log(date)
-  console.log(iso)
   return `${date.getHours() < 10 ? '0' + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()} ${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`
 }
 
-const SendSlackMessage = async (e: event, app: any, starting_phrase: string) => {
+const SendSlackMessage = async (e: event, app: any, channel: string, starting_phrase: string) => {
   try {
-    let slack_channel = process.env.SLACK_ANNOUNCEMENTS_CHANNEL
-      ? process.env.SLACK_ANNOUNCEMENTS_CHANNEL
-      : "C01FUMML1JA"; // * #2021-app-announcements
-
-    // console.log("Sending Slack Announcement to ", slack_channel);
+    // console.log("Sending Slack Announcement to ", channel);
     await app.client.chat.postMessage({
       token: process.env.SLACK_BOT_TOKEN,
-      channel: slack_channel,
+      channel: channel,
       text: ``,
       blocks: [
         {
